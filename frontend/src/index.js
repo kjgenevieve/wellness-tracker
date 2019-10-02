@@ -9,6 +9,8 @@ function main() {
 
 function checkLogin() {
     // Will check if a user is logged in; if no, page loads a login form. Else:
+    
+    const loggedIn = true
     const user_id = 1
     fetch(`http://localhost:3000/users/${user_id}`)
     .then(resp => resp.json())
@@ -16,46 +18,50 @@ function checkLogin() {
 };
 
 function loadDashboard(user) {
-    // console.log(`loadDashboard(); user object =`, user)
     const mainEl = document.getElementById("main")
-    // console.log(`mainEl`, mainEl)
     const welcome = document.createElement("p")
     welcome.textContent = `Hello, ${user.name}!`
     mainEl.appendChild(welcome)
 
+    // More info will be displayed here later
+
     // Only show "Take New Test" button if user is logged in
-    newTestListener(user, mainEl);
+    dashboardListeners(user, mainEl);
 };
 
-function newTestListener(user, mainEl) {
+function dashboardListeners(user, mainEl) {
     const newTestBtn = document.getElementById("newTestBtn")
-    newTestBtn.addEventListener("click", () => loadNewTest(user, mainEl))
+    newTestBtn.addEventListener("click", () => prepNewTest(user, mainEl))
+
+    // Other listeners go here.
 }
 
-function loadNewTest(user, mainEl) {
+function prepNewTest(user, mainEl) {
     if (mainEl.hasChildNodes()) {
         mainEl.innerHTML = "";
     }    
-    const test = document.createElement("container");
-    test.textContent = `TEST TIME, ${user.name}!`;
-    mainEl.appendChild(test);
+    const testContainer = document.createElement("container");
+    testContainer.id = "testContainer"
+    testContainer.textContent = `TEST TIME, ${user.name}!`;
+    mainEl.appendChild(testContainer);
     
     fetch(`http://localhost:3000/questions`)
     .then(resp => resp.json())
-    .then(data => showTest(user, test, data))
+    .then(data => showTestForm(user, testContainer, data))
 }
 
-function showTest(user, test, questions) {
-    console.log(`user`, user)
-    console.log(`test`, test)
-    console.log(`questions`, questions)
 
+
+function showTestForm(user, testContainer, questions) {
     // Create Form
     const newTest = document.createElement("form")
     newTest.id = "newTestForm"
-    test.appendChild(newTest)
-    // Create each question
-    
+    testContainer.appendChild(newTest)
+
+    createCategoryDivs(user, questions, newTest)
+}
+
+function createCategoryDivs(user, questions, newTest) {
     const physicalDiv = document.createElement("div")
     physicalDiv.id = "physicalQs"
     newTest.appendChild(physicalDiv)
@@ -79,14 +85,15 @@ function showTest(user, test, questions) {
     const spiritualDiv = document.createElement("div")
     spiritualDiv.id = "spiritualQs"
     newTest.appendChild(spiritualDiv)
-    
+
+    createQuestionDivs(user, questions)
+}
+
+function createQuestionDivs(user, questions) {
     for (question of questions) {
         let category = question.category;
         let number = question.number;
         let text = question.text;
-        console.log(`category`, category)
-        console.log(`number`, number)
-        console.log(`text`, text)
 
         let questionDiv = document.createElement("div")
         questionDiv.id = (`q${number}`)
@@ -95,32 +102,42 @@ function showTest(user, test, questions) {
         qText.textContent = (`${number}. ${text}`)
         questionDiv.appendChild(qText)
 
-
         let response = document.createElement("input");
         response.setAttribute("type", "text")
         questionDiv.appendChild(response)
 
         if (category === "physical") {
-            physicalDiv.appendChild(questionDiv)
+            document.getElementById("physicalQs").appendChild(questionDiv)
         } else if (category === "financial") {
-            financialDiv.appendChild(questionDiv)
+            document.getElementById("financialQs").appendChild(questionDiv)
         } else if (category === "intellectual") {
-            intellectualDiv.appendChild(questionDiv)
+            document.getElementById("intellectualQs").appendChild(questionDiv)
         } else if (category === "emotional") {
-            emotionalDiv.appendChild(questionDiv)
+            document.getElementById("emotionalQs").appendChild(questionDiv)
         } else if (category === "social") {
-            socialDiv.appendChild(questionDiv)
+            document.getElementById("socialQs").appendChild(questionDiv)
         } else if (category === "spiritual") {
-            spiritualDiv.appendChild(questionDiv)
+            document.getElementById("spiritualQs").appendChild(questionDiv)
         } else {
             console.log("Question's Category not found!")
         }
     }
-
-
-
     // Create submit button
     let submitBtn = document.createElement("button");
     submitBtn.innerHTML = "Submit"
-    newTest.appendChild(submitBtn)
+    document.getElementById("newTestForm").appendChild(submitBtn)
+
+    testSubmitListener(user, submitBtn);
+}
+
+function testSubmitListener(user, submitBtn) {
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        submitTest(e, user)
+    });
+}
+
+function submitTest(e, user) {
+    console.log(user)
+    console.log(e)
 }
