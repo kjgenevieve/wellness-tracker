@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Question.delete_all
+
 # Physical
 q1 = Question.create(category: "physical", number: 1, text: "I eat a balanced, nutritional diet.")
 q2 = Question.create(category: "physical", number: 2, text: "I exercise at least three times a week.")
@@ -53,3 +55,14 @@ q33 = Question.create(category: "spiritual", number: 33, text: "I am happy with 
 q34 = Question.create(category: "spiritual", number: 34, text: "I practice prayer, meditation, or engage in some type of reflective growth.")
 q35 = Question.create(category: "spiritual", number: 35, text: "Principles/ethics/morals provide guides for my life.")
 q36 = Question.create(category: "spiritual", number: 36, text: "I trust others and am able to forgive others and myself.")
+
+########################
+
+User.delete_all
+
+#Users
+u1 = User.create(name: "Genevieve")
+u2 = User.create(name: "Scott")
+u3 = User.create(name: "Ramona")
+u4 = User.create(name: "Knives")
+u5 = User.create(name: "Wallace")
