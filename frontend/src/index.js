@@ -99,6 +99,7 @@ function createQuestionDivs(user, questions) {
         questionDiv.id = (`q${number}`)
         
         let qText = document.createElement("p")
+        qText.id = question.id
         qText.textContent = (`${number}. ${text}`)
         questionDiv.appendChild(qText)
 
@@ -133,11 +134,86 @@ function createQuestionDivs(user, questions) {
 function testSubmitListener(user, submitBtn) {
     submitBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        submitTest(e, user)
+        prepDataForSubmit(e, user)
     });
 }
 
-function submitTest(e, user) {
-    console.log(user)
-    console.log(e)
+function prepDataForSubmit(e, user) {
+    const user_id = user.id;
+
+    let month = new Date();
+    month = month.getMonth() + 1; // JavaScript stores January as 0.
+    
+    let day = new Date();
+    day = day.getDate();
+    
+    let year = new Date();
+    year = year.getFullYear();
+    const date = `${month}/${day}/${year}`;
+    console.log(date)
+
+    const newTestArray = {}
+
+    for (i = 0; i < e.target.form.length - 1; i++) {
+        let responseBox = e.target.form[i]
+        let response = responseBox.value
+        let question_id = responseBox.parentElement.firstChild.id
+        newTestArray[i] = {user_id, question_id, response, date}
+    }
+    postNewTest(newTestArray)
+}
+
+function postNewTest(newTestArray) {
+// const quote = e.target.quote.value
+    // const author = e.target.author.value
+    
+    // submitQuote.reset();
+    
+    // const newQuote = {quote, author}
+    
+    fetch("http://localhost:3000/answers", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify(newTestArray)
+    })
+    .then(resp => resp.json())
+    .then(console.log)
+    // .then(data => createQuote(data))
+    
+
+
+    // @answer.user_id = (params[:user_id])
+    // @answer.question_id = (params[:question_id])
+    // @answer.response = (params[:response])
+    // @answer.date = (params[:date])
+
+
+    // #=> Example Request
+    // POST /pokemons
+    
+    // Required Headers:
+    // {
+    //   'Content-Type': 'application/json'
+    // }
+    
+    // Required Body:
+    // {
+    //   "trainer_id": 1
+    // }
+    
+    // #=> Example Response
+    // {
+    //   "id":147,
+    //   "nickname":"Gunnar",
+    //   "species":"Weepinbell",
+    //   "trainer_id":1
+    // }
+
+
+    
+
+
 }
