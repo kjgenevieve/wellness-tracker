@@ -1400,7 +1400,7 @@ uv.Graph.prototype.finalize = function (isLoggable) {
 
   //Log Graph object if flag set to truthy value
   //if (isLoggable) {
-    console.log(self);
+    // console.log(self);
   //}
   return this;
 };

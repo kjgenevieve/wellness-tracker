@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function main() {
     checkLogin();
+    showChart();
 };
 
 function checkLogin() {
@@ -103,9 +104,46 @@ function createQuestionDivs(user, questions) {
         qText.textContent = (`${number}. ${text}`)
         questionDiv.appendChild(qText)
 
-        let response = document.createElement("input");
-        response.setAttribute("type", "text")
-        questionDiv.appendChild(response)
+        // let response = document.createElement("input");
+        // response.setAttribute("type", "text")
+        // questionDiv.appendChild(response)
+
+        // Create Table for Buttons
+        let responseTable = document.createElement("table")
+        responseTable.id = "responseTable"
+        questionDiv.appendChild(responseTable)
+
+        // Create Row Node
+        let percents = document.createElement("tr")
+        percents.id = "percents"
+        responseTable.appendChild(percents)
+
+        // Create Row 1 Elements
+        for (i = 0; i <= 100; i += 10) {
+            let percent = document.createElement("td")
+            percent.textContent = `${i}%`
+            percents.appendChild(percent)
+        }
+        
+        // Create Row Node
+        let btnRow = document.createElement("tr")
+        btnRow.id = "btnRow"
+        responseTable.appendChild(btnRow)
+
+        // Create Row 2 Elements
+        for (i = 0; i < 11; i++) {
+            let btnHolder = document.createElement("td")
+            btnRow.appendChild(btnHolder)
+
+            let radioBtn = document.createElement("input")
+            radioBtn.type = "radio";
+            radioBtn.name = `q${number}`
+            radioBtn.value = i;
+            if (radioBtn.value == 0) {
+                radioBtn.checked = true;
+            };
+            btnHolder.appendChild(radioBtn);
+        }
 
         if (category === "physical") {
             document.getElementById("physicalQs").appendChild(questionDiv)
@@ -139,8 +177,10 @@ function testSubmitListener(user, submitBtn) {
 }
 
 function prepDataForSubmit(e, user) {
+    // Prep user_id
     const user_id = user.id;
 
+    // Prep date
     let month = new Date();
     month = month.getMonth() + 1; // JavaScript stores January as 0.
     
@@ -150,70 +190,57 @@ function prepDataForSubmit(e, user) {
     let year = new Date();
     year = year.getFullYear();
     const date = `${month}/${day}/${year}`;
-    console.log(date)
+    
+    // Data object
+    const newTestInfo = {}
 
-    const newTestArray = {}
+    
+    let form_elements = newTestForm.elements;
+    for (i = 1; i <= 36; i++) {
+        // console.log(e.target.form.length)
 
-    for (i = 0; i < e.target.form.length - 1; i++) {
-        let responseBox = e.target.form[i]
-        let response = responseBox.value
-        let question_id = responseBox.parentElement.firstChild.id
-        newTestArray[i] = {user_id, question_id, response, date}
+        // Go up the nodes to find the Question Node, then find the stored id of that, which refers to the question_id.
+        // let question_id = document.getElementById("q1").firstChild.id
+        // let question_id = e.target.form[i].parentElement.parentElement.parentElement.parentElement.firstChild.id
+        // console.log(question_id)
+
+        let name = "q" + this.i
+
+        let question_id = document.getElementById(name).firstChild.id
+        let response = form_elements[name].value;
+        
+        newTestInfo[i] = {user_id, question_id, response, date}
     }
-    postNewTest(newTestArray)
+    // console.log(newTestInfo)
+    postNewTest(newTestInfo)
 }
 
-function postNewTest(newTestArray) {
-// const quote = e.target.quote.value
-    // const author = e.target.author.value
-    
-    // submitQuote.reset();
-    
-    // const newQuote = {quote, author}
-    
+function postNewTest(newTestInfo) {    
     fetch("http://localhost:3000/answers", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             Accept: "application/json"
         },
-        body: JSON.stringify(newTestArray)
+        body: JSON.stringify(newTestInfo)
     })
     .then(resp => resp.json())
     .then(console.log)
-    // .then(data => createQuote(data))
-    
+}
 
+function showChart() {
+    const graphdef = {
+        categories : ['uvCharts'],
+        dataset : {
+            'uvCharts' : [
+                { name : '2009', value : 100 },
+                { name : '2010', value : 70 },
+                { name : '2011', value : 50 },
+                { name : '2012', value : 10 },
+                { name : '2013', value : 80 }
+            ]
+        }
+    }
 
-    // @answer.user_id = (params[:user_id])
-    // @answer.question_id = (params[:question_id])
-    // @answer.response = (params[:response])
-    // @answer.date = (params[:date])
-
-
-    // #=> Example Request
-    // POST /pokemons
-    
-    // Required Headers:
-    // {
-    //   'Content-Type': 'application/json'
-    // }
-    
-    // Required Body:
-    // {
-    //   "trainer_id": 1
-    // }
-    
-    // #=> Example Response
-    // {
-    //   "id":147,
-    //   "nickname":"Gunnar",
-    //   "species":"Weepinbell",
-    //   "trainer_id":1
-    // }
-
-
-    
-
-
+    const graph = uv.chart('PolarArea', graphdef);    
 }
