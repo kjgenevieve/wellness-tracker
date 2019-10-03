@@ -5,8 +5,10 @@
     <title>Wellness Tracker</title>
     <link rel="stylesheet" href="index.css">
     <script type="text/javascript" src="src/index.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
-    <script type="text/javascript" src="libraries/uvCharts.js"></script>
+    <!-- <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js"></script>
+    <script type="text/javascript" src="libraries/uvCharts.js"></script> -->
+    <script src="libraries/node_modules/chart.js/dist/Chart.js"></script>
+    <script src="src/chartDisplay.js"></script>
   </head>
 
   <body>
@@ -45,6 +47,9 @@
 
     </div>
     
-    <div id="uv-div"></div>
+    <!-- <div id="uv-div"></div> -->
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+
   </body>
 </html>

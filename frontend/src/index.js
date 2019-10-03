@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function main() {
     checkLogin();
-    showChart();
+    // showChart();
 };
 
 function checkLogin() {
@@ -228,19 +228,107 @@ function postNewTest(newTestInfo) {
     .then(console.log)
 }
 
-function showChart() {
-    const graphdef = {
-        categories : ['uvCharts'],
-        dataset : {
-            'uvCharts' : [
-                { name : '2009', value : 100 },
-                { name : '2010', value : 70 },
-                { name : '2011', value : 50 },
-                { name : '2012', value : 10 },
-                { name : '2013', value : 80 }
-            ]
-        }
-    }
+// function showChart() {
+//     // const graphdef = {
+//     //     categories : ['uvCharts'],
+//     //     dataset : {
+//     //         'uvCharts' : [
+//     //             { name : '2009', value : 100 },
+//     //             { name : '2010', value : 70 },
+//     //             { name : '2011', value : 50 },
+//     //             { name : '2012', value : 10 },
+//     //             { name : '2013', value : 80 }
+//     //         ]
+//     //     }
+//     // }
 
-    const graph = uv.chart('PolarArea', graphdef);    
-}
+//     var graphdef = {
+//         categories : ['uvCharts', 'matisse', 'bot-bot', 'SocialByWay', 'WaveMaker'],
+//         dataset : {
+//             'uvCharts' : [
+//                 { name : '2009', value : 10 },
+//                 { name : '2010', value : 20 },
+//                 { name : '2011', value : 30 },
+//                 { name : '2012', value : 40 },
+//                 { name : '2013', value : 50 }
+//             ],
+            
+//             'matisse' : [
+//                 { name : '2009', value : 10 },
+//                 { name : '2010', value : 75 },
+//                 { name : '2011', value : 90 },
+//                 { name : '2012', value : 10 },
+//                 { name : '2013', value : 20 }		
+//             ],
+            
+//             'bot-bot' : [
+//                 { name : '2009', value : 43 },
+//                 { name : '2010', value : 10 },
+//                 { name : '2011', value : 100 },
+//                 { name : '2012', value : 10 },
+//                 { name : '2013', value : 20 }	
+//             ],
+            
+//             'SocialByWay' : [
+//                 { name : '2009', value : 88 },
+//                 { name : '2010', value : 20 },
+//                 { name : '2011', value : 10 },
+//                 { name : '2012', value : 50 },
+//                 { name : '2013', value : 50 }	
+//             ],
+            
+//             'WaveMaker' : [
+//                 { name : '2009', value : 32 },
+//                 { name : '2010', value : 60 },
+//                 { name : '2011', value : 97 },
+//                 { name : '2012', value : 10 },
+//                 { name : '2013', value : 20 }	
+//             ]
+//         }
+//     }
+    
+    
+
+//     const configs = {
+//         meta : {
+//             caption : 'Usage over years',
+//             subcaption : 'among Imaginea OS products',
+//             hlabel : 'Years',
+//             vlabel : 'Number of users',
+//             vsublabel : 'in thousands'
+//         },
+
+//         axis : {
+//             showtexts : true,
+//             ticks : 4
+//         },
+
+//         scale : {
+//             ordinality : .1
+// // Type: Decimal | Range: 0-1 | Default: 0.2
+// // Defines the gap between 2 consecutive labels
+
+
+//         },
+
+//         label : {
+//             showlabel : true
+//         }
+//     }
+
+
+//     // var config = {
+//     //     groupname1 : {
+//     //         property1 : value1,
+//     //         property2 : value2,
+//     //         property3 : value3
+//     //     },
+        
+//     //     groupname2 : {
+//     //         property4 : value4,
+//     //         property5 : value5
+//     //     }
+//     // }
+
+//     const graph = uv.chart('Bar', graphdef, configs);
+// }
