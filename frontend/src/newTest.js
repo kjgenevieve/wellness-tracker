@@ -17,7 +17,9 @@ function prepNewTest(user, mainEl) {
 
     fetch(`http://localhost:3000/questions`)
     .then(resp => resp.json())
-    .then(data => showTestForm(user, testContainer, data))
+    .then(data => {
+        showTestForm(user, testContainer, data)
+    })
 }
 
 

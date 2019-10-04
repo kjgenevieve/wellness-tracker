@@ -15,5 +15,14 @@ function checkLogin() {
     const user_id = 1
     fetch(`http://localhost:3000/users/${user_id}`)
     .then(resp => resp.json())
-    .then(data => loadDashboard(data))
+    .then(user => {
+        loadDashboard(user)
+
+        const mainEl = document.getElementById("main")
+        const newTestBtn = document.getElementById("newTestBtn");
+        newTestBtn.addEventListener("click", () => prepNewTest(user, mainEl));
+
+        const dashboardBtn = document.getElementById("dashboard");
+        dashboardBtn.addEventListener("click", () => loadDashboard(user));
+    })
 };
