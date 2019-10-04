@@ -29,6 +29,17 @@ function makePrevResultList(user, mainEl) {
 }
 
 function getPrevResults(user, prevResults) {
-    // fetch(`http://localhost:3000/answers/${user_id}`)
-    // .then(resp => resp.json())
+    fetch(`http://localhost:3000/users/${user.id}/answers`)
+    .then(resp => resp.json())
+    .then(data => findUniqueDates(data))
+}
+
+function findUniqueDates(data) {
+    const uniqueDates = []
+    for (response of data) {
+        if (!uniqueDates.includes(response.date)) {
+            uniqueDates.push(response.date)
+        }
+    }
+    console.log(uniqueDates)
 }
