@@ -16,4 +16,19 @@ function loadDashboard(user) {
     // More info will be displayed here later
 
     // Only show "Take New Test" button if user is logged in
+
+    makePrevResultList(user, mainEl);
 };
+
+function makePrevResultList(user, mainEl) {
+    let prevResults = document.createElement("ul")
+    prevResults.id = prevResults
+    mainEl.appendChild(prevResults)
+
+    getPrevResults(user, prevResults)
+}
+
+function getPrevResults(user, prevResults) {
+    // fetch(`http://localhost:3000/answers/${user_id}`)
+    // .then(resp => resp.json())
+}

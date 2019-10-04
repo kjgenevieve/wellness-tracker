@@ -9,6 +9,12 @@ class AnswersController < ApplicationController
         render :json => @answer
     end
 
+    def show_user
+        @answers = Answer.all
+        @user = User.find(params[:id])
+        render :json => answer.where("user_id": (params[:user_id]))
+    end
+
     def new
         @answer = Answer.new
     end
