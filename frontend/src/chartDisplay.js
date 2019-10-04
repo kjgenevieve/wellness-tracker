@@ -19,7 +19,6 @@ function prepForChart(data, user) {
     myChart.height = "400"
     chartEl.appendChild(myChart)
     
-    dashboardListeners(user, mainEl);
     displayChart(data);
 };
 

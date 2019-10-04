@@ -8,8 +8,6 @@ function prepNewTest(user, mainEl) {
         chartEl.innerHTML = "";
     };
 
-    dashboardListeners(user, mainEl);
-
     const testContainer = document.createElement("container");
     testContainer.id = "testContainer"
     testContainer.textContent = `TEST TIME, ${user.name}!`;
