@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
 
     def show_user
         @answers = Answer.all
-        @user = User.find(params[:id])
+        # @user = User.find(params[:id])
         render :json => answer.where("user_id": (params[:user_id]))
     end
 

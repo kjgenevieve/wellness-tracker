@@ -89,6 +89,7 @@ function createLabels() {
 
 function prepareData(data) {
     let readyData = []
+    console.log("prepareData()", data)
     for (i = 1; i <= 36; i++) {
         readyData.push(parseInt(data[i].response, 10));
     };
